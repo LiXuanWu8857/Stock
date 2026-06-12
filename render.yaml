@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: stock-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: DATABASE_URL
+        sync: false          # 部署時在 Render Dashboard 手動貼上 Supabase 連線字串
+      - key: CORS_ORIGINS
+        sync: false          # 部署時填入 Vercel 前端網址
+    healthCheckPath: /health
+    autoDeploy: true

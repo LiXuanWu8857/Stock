@@ -27,7 +27,7 @@ yfinance                   (台股 .TW / 美股報價，免費、無需 API key)
 
 ## 線上部署
 
-見 [DEPLOY.md](./DEPLOY.md) — Vercel（前端）+ Railway（後端 + PostgreSQL）逐步教學。
+見 [DEPLOY.md](./DEPLOY.md) — Vercel（前端）+ Render（後端）+ Supabase（PostgreSQL）逐步教學，全部免費。
 
 > 注意：本系統含後端與資料庫，**無法**部署在 GitHub Pages（只能放靜態檔案）。
 
