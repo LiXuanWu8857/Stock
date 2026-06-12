@@ -18,5 +18,5 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Railway injects PORT at runtime; default to 8000 for local docker compose
+CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}

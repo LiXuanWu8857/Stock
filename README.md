@@ -25,6 +25,12 @@ PostgreSQL 16              (port 5432)
 yfinance                   (台股 .TW / 美股報價，免費、無需 API key)
 ```
 
+## 線上部署
+
+見 [DEPLOY.md](./DEPLOY.md) — Vercel（前端）+ Railway（後端 + PostgreSQL）逐步教學。
+
+> 注意：本系統含後端與資料庫，**無法**部署在 GitHub Pages（只能放靜態檔案）。
+
 ## 快速啟動（Docker）
 
 ```bash
