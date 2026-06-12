@@ -103,6 +103,24 @@ class PortfolioSummary(BaseModel):
     holding_count: int
 
 
+class PerformancePoint(BaseModel):
+    date: date
+    invested_amount: float
+    withdrawn_amount: float
+    market_value: float
+    cash: float
+    total_asset: float
+    net_profit: float
+    roi_pct: float
+    twr_pct: float
+
+
+class PerformanceHistory(BaseModel):
+    points: List[PerformancePoint]
+    max_drawdown_pct: float
+    range: str
+
+
 class QuoteResponse(BaseModel):
     symbol: str
     market: str

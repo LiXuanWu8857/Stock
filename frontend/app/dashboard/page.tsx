@@ -11,6 +11,7 @@ import {
 import { useQuotesWebSocket } from "@/hooks/useWebSocket";
 import type { PortfolioSummary as Summary, Transaction } from "@/lib/types";
 import PortfolioSummary from "@/components/PortfolioSummary";
+import PerformanceChart from "@/components/PerformanceChart";
 import HoldingsTable from "@/components/HoldingsTable";
 import AddHoldingModal from "@/components/AddHoldingModal";
 import TransactionHistory from "@/components/TransactionHistory";
@@ -22,6 +23,7 @@ export default function DashboardPage() {
   const [txLoading, setTxLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [perfReloadToken, setPerfReloadToken] = useState(0);
 
   const loadPortfolio = useCallback(async () => {
     setLoading(true);
@@ -75,6 +77,7 @@ export default function DashboardPage() {
     try {
       await deleteHolding(id);
       await loadPortfolio();
+      setPerfReloadToken((t) => t + 1);
     } catch (err) {
       setError(err instanceof Error ? err.message : "刪除失敗");
     }
@@ -83,6 +86,7 @@ export default function DashboardPage() {
   function handleAdded() {
     loadPortfolio();
     loadTransactions();
+    setPerfReloadToken((t) => t + 1);
   }
 
   return (
@@ -126,6 +130,8 @@ export default function DashboardPage() {
         )}
 
         <PortfolioSummary summary={summary} todayPnl={todayPnl} />
+
+        <PerformanceChart reloadToken={perfReloadToken} />
 
         <HoldingsTable
           holdings={summary?.holdings ?? []}

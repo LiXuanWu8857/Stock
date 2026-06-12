@@ -4,6 +4,8 @@ import type {
   TransactionCreate,
   Quote,
   Market,
+  PerformanceHistory,
+  PerformanceRange,
 } from "./types";
 
 export const API_BASE =
@@ -59,6 +61,19 @@ export function deleteTransaction(id: number): Promise<void> {
 export function getQuote(symbol: string, market?: Market): Promise<Quote> {
   const qs = market ? `?market=${market}` : "";
   return request<Quote>(`/api/quotes/${encodeURIComponent(symbol)}${qs}`);
+}
+
+export function getPerformance(
+  range: PerformanceRange
+): Promise<PerformanceHistory> {
+  return request<PerformanceHistory>(`/api/performance?range=${range}`);
+}
+
+export function backfillPerformance(): Promise<{
+  status: string;
+  snapshots_written: number;
+}> {
+  return request("/api/performance/backfill", { method: "POST" });
 }
 
 export function detectMarket(symbol: string): Market {

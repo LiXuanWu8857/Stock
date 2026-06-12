@@ -66,6 +66,26 @@ export interface Quote {
   error: string | null;
 }
 
+export type PerformanceRange = "1M" | "3M" | "6M" | "1Y" | "ALL";
+
+export interface PerformancePoint {
+  date: string;
+  invested_amount: number;
+  withdrawn_amount: number;
+  market_value: number;
+  cash: number;
+  total_asset: number;
+  net_profit: number;
+  roi_pct: number;
+  twr_pct: number;
+}
+
+export interface PerformanceHistory {
+  points: PerformancePoint[];
+  max_drawdown_pct: number;
+  range: PerformanceRange;
+}
+
 export interface QuotesMessage {
   type: "quotes" | "error";
   data?: Record<string, Quote>;

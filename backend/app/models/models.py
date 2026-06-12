@@ -61,6 +61,27 @@ class Transaction(Base):
     user = relationship("User", back_populates="transactions")
 
 
+class DailySnapshot(Base):
+    __tablename__ = "daily_snapshots"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, default=1)
+    date = Column(Date, nullable=False)
+    invested_amount = Column(Numeric(18, 4), nullable=False, default=0)
+    withdrawn_amount = Column(Numeric(18, 4), nullable=False, default=0)
+    market_value = Column(Numeric(18, 4), nullable=False, default=0)
+    cash = Column(Numeric(18, 4), nullable=False, default=0)
+    total_asset = Column(Numeric(18, 4), nullable=False, default=0)
+    net_profit = Column(Numeric(18, 4), nullable=False, default=0)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    __table_args__ = (
+        UniqueConstraint("user_id", "date", name="uq_snapshot_user_date"),
+    )
+
+    user = relationship("User")
+
+
 class Dividend(Base):
     __tablename__ = "dividends"
 

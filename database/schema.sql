@@ -39,6 +39,21 @@ CREATE TABLE IF NOT EXISTS transactions (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Daily portfolio snapshots (for net profit / performance curves)
+CREATE TABLE IF NOT EXISTS daily_snapshots (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL DEFAULT 1,
+    date DATE NOT NULL,
+    invested_amount NUMERIC(18, 4) NOT NULL DEFAULT 0,
+    withdrawn_amount NUMERIC(18, 4) NOT NULL DEFAULT 0,
+    market_value NUMERIC(18, 4) NOT NULL DEFAULT 0,
+    cash NUMERIC(18, 4) NOT NULL DEFAULT 0,
+    total_asset NUMERIC(18, 4) NOT NULL DEFAULT 0,
+    net_profit NUMERIC(18, 4) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    UNIQUE(user_id, date)
+);
+
 -- Dividends table
 CREATE TABLE IF NOT EXISTS dividends (
     id SERIAL PRIMARY KEY,
@@ -62,6 +77,9 @@ CREATE INDEX IF NOT EXISTS idx_transactions_user_id ON transactions(user_id);
 CREATE INDEX IF NOT EXISTS idx_transactions_symbol ON transactions(symbol);
 CREATE INDEX IF NOT EXISTS idx_transactions_date ON transactions(date);
 CREATE INDEX IF NOT EXISTS idx_transactions_market ON transactions(market);
+
+CREATE INDEX IF NOT EXISTS idx_snapshots_user_id ON daily_snapshots(user_id);
+CREATE INDEX IF NOT EXISTS idx_snapshots_date ON daily_snapshots(date);
 
 CREATE INDEX IF NOT EXISTS idx_dividends_user_id ON dividends(user_id);
 CREATE INDEX IF NOT EXISTS idx_dividends_symbol ON dividends(symbol);
