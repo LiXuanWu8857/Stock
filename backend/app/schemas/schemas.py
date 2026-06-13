@@ -130,3 +130,4 @@ class QuoteResponse(BaseModel):
     name: Optional[str] = None
     currency: Optional[str] = None
     error: Optional[str] = None
+    is_extended: bool = False  # True when price is pre/post-market

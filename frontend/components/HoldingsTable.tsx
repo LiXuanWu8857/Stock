@@ -109,6 +109,7 @@ export default function HoldingsTable({
               holdings.map((h) => {
                 const key = `${h.symbol}:${h.market}`;
                 const live = liveQuotes[key];
+                const isExtended = live?.is_extended ?? false;
                 const price = live?.price ?? h.current_price;
                 const shares = parseFloat(h.shares);
                 const avgCost = parseFloat(h.avg_cost);
@@ -143,7 +144,14 @@ export default function HoldingsTable({
                     </td>
                     <td className="px-5 py-4">{fmt(shares, 0)}</td>
                     <td className="px-5 py-4">{fmt(avgCost)}</td>
-                    <td className="px-5 py-4 font-medium">{fmt(price)}</td>
+                    <td className="px-5 py-4 font-medium">
+                      {fmt(price)}
+                      {isExtended && price !== null && (
+                        <span className="ml-1.5 rounded bg-amber-500/15 px-1 py-0.5 text-[10px] text-amber-400">
+                          盤{live?.change_pct !== null && (live?.change_pct ?? 0) > 0 ? "前" : "後"}
+                        </span>
+                      )}
+                    </td>
                     <td className="px-5 py-4">{fmt(value)}</td>
                     <td className="px-5 py-4">
                       <PnlCell value={pnl} pct={null} />
