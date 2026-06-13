@@ -64,6 +64,7 @@ export interface Quote {
   name: string | null;
   currency: string | null;
   error: string | null;
+  is_extended: boolean;
 }
 
 export type PerformanceRange = "1M" | "3M" | "6M" | "1Y" | "ALL";
